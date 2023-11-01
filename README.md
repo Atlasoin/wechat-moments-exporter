@@ -1,6 +1,9 @@
 # WeChat Moment Exporter
 
-这是一个导出朋友圈数据的脚本。运行程序后会得到 ``moments.json`` 文件在根目录下。如果重新展示出数据或者有上链存储备份需求的可以参考[这个仓库](https://github.com/Atlasoin/migrate-notes-2-csb)。
+这是一个导出朋友圈数据的脚本，已成功从 ios 系统，微信版本 8.0.32 里导出数据。
+
+运行程序后会得到 ``moments.json`` 文件在根目录下。如果重新展示出数据或者有上链存储备份需求的可以参考[这个仓库](https://github.com/Atlasoin/migrate-notes-2-csb)。
+
 
 ## 步骤
 
