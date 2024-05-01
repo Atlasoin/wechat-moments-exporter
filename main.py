@@ -1,4 +1,4 @@
-# 此脚本 在 8.0.39 的微信提取的数据中可正常使用 
+# 此脚本 在 8.0.43 的微信提取的数据中可正常使用 
 import json
 import sqlite3
 import os
@@ -23,7 +23,7 @@ magic_number = 8388607990
 #       |------------ var_payload
 
 # wxid_xxxx 标识位
-WXID_FLAG = b'\x18\x00\x2A'
+WXID_FLAG = b'\x18\x00\x20'
 # 朋友圈文字内容标识位
 CONTENT_FLAG = b'\xba\x01'
 # 朋友圈图片标识位
@@ -72,8 +72,15 @@ def load_moments(hash):
 # 根据 start 和 off 截取 hex 并解码为文字
 def decode_msg(hex_includes_msg, start, off):
     msg_hex = hex_includes_msg[start:start+off]
-    msg_str = msg_hex.decode()
-    return msg_str
+    if off == 0x00:
+        return ""
+    else:
+        try:
+            msg_str = msg_hex.decode()
+            return msg_str
+        except:
+            print("解密失败，请手动处理")
+            return "(解密失败，请手动处理)"
 
 # msg_payload 包含文字长度和文字内容本身，从 msg_payload 中获取实际 msg 的偏移量和长度
 def get_msg_off_and_len(hex_includes_msg):
@@ -241,6 +248,7 @@ def main(options=default_option):
             id = i[:-4]
             if len(wxId) == 0:
                 wxId = get_text_by_flag(hex, WXID_FLAG, first=True)
+            print(f"Parsing: {i}")
             moment = extract_moment(hex, id)
             moments.append(moment)
 
